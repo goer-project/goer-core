@@ -9,17 +9,13 @@ import (
 )
 
 func InitConfig(path string, data interface{}) *viper.Viper {
-	// Default config file
-	cfgFile := "config.toml"
-
-	// Use config file from the flag.
-	if path != "" {
-		cfgFile = path
-	}
-
-	// Read config file
+	// New viper instance
 	v := viper.New()
-	v.SetConfigFile(cfgFile)
+
+	// Use config file from the path.
+	if path != "" {
+		v.SetConfigFile(path)
+	}
 
 	// Find home directory.
 	home, err := os.UserHomeDir()
