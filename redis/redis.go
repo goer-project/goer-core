@@ -2,7 +2,6 @@ package redis
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -13,8 +12,7 @@ type RedisClient struct {
 	Context context.Context
 }
 
-func NewClient(addr string, password string, db int) *RedisClient {
-	rds := &RedisClient{}
+func NewClient(addr string, password string, db int) (rds *RedisClient, err error) {
 	rds.Context = context.Background()
 
 	// New client
@@ -25,12 +23,12 @@ func NewClient(addr string, password string, db int) *RedisClient {
 	})
 
 	// Ping
-	err := rds.Ping()
+	err = rds.Ping()
 	if err != nil {
-		log.Println(err)
+		return
 	}
 
-	return rds
+	return
 }
 
 func (rds RedisClient) Ping() (err error) {
