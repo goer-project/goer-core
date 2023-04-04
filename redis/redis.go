@@ -13,6 +13,7 @@ type RedisClient struct {
 }
 
 func NewClient(addr string, password string, db int) (rds *RedisClient, err error) {
+	rds = &RedisClient{}
 	rds.Context = context.Background()
 
 	// New client
