@@ -10,7 +10,7 @@ type MultiStore struct {
 }
 
 func (s *MultiStore) Set(key string, value string, expireTime time.Duration) {
-	s.LocalStore.Set(key, value, expireTime)
+	s.LocalStore.Set(key, value, 0)
 	s.RedisStore.Set(key, value, expireTime)
 }
 
