@@ -41,7 +41,7 @@ func (s *LocalStore) Forget(key string) {
 }
 
 func (s *LocalStore) Forever(key string, value string) {
-	s.GoCacheClient.Set(s.KeyPrefix+key, value, 0)
+	s.GoCacheClient.Set(s.KeyPrefix+key, value, -1)
 }
 
 func (s *LocalStore) Flush() {
