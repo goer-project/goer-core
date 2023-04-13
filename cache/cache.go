@@ -49,7 +49,7 @@ func (cs *CacheService) GetObject(key string, wanted interface{}) error {
 
 	err := json.Unmarshal([]byte(val), &wanted)
 	if err != nil {
-		log.Println(err)
+		return err
 	}
 
 	return nil
