@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"log"
 	"time"
 )
 
@@ -17,8 +18,12 @@ func (s *MultiStore) Set(key string, value string, expireTime time.Duration) {
 func (s *MultiStore) Get(key string) string {
 	value := s.LocalStore.Get(key)
 	if len(value) > 0 {
+		log.Println("get from local store")
+
 		return value
 	}
+
+	log.Println("get from redis store")
 
 	return s.RedisStore.Get(key)
 }
