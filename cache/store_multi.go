@@ -5,8 +5,8 @@ import (
 )
 
 type MultiStore struct {
-	LocalStore LocalStore
-	RedisStore RedisStore
+	LocalStore *LocalStore
+	RedisStore *RedisStore
 }
 
 func (s *MultiStore) Set(key string, value string, expireTime time.Duration) {
