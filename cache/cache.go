@@ -2,6 +2,7 @@ package cache
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"time"
 )
@@ -40,14 +41,18 @@ func (cs *CacheService) Get(key string) interface{} {
 	return wanted
 }
 
-func (cs *CacheService) GetObject(key string, wanted interface{}) {
+func (cs *CacheService) GetObject(key string, wanted interface{}) error {
 	val := cs.Store.Get(key)
-	if len(val) > 0 {
-		err := json.Unmarshal([]byte(val), &wanted)
-		if err != nil {
-			log.Println(err)
-		}
+	if len(val) == 0 {
+		return errors.New("not found")
 	}
+
+	err := json.Unmarshal([]byte(val), &wanted)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return nil
 }
 
 func (cs *CacheService) Has(key string) bool {
