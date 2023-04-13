@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/patrickmn/go-cache"
@@ -22,12 +22,7 @@ func (s *LocalStore) Get(key string) string {
 		return ""
 	}
 
-	by, err := json.Marshal(res)
-	if err != nil {
-		return ""
-	}
-
-	return string(by)
+	return fmt.Sprintf("%v", res)
 }
 
 func (s *LocalStore) Has(key string) bool {

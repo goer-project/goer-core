@@ -27,6 +27,9 @@ func (cs *CacheService) Set(key string, obj interface{}, expireTime time.Duratio
 
 func (cs *CacheService) Get(key string) interface{} {
 	stringValue := cs.Store.Get(key)
+	if len(stringValue) == 0 {
+		return nil
+	}
 
 	var wanted interface{}
 	err := json.Unmarshal([]byte(stringValue), &wanted)
