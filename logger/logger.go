@@ -11,8 +11,7 @@ import (
 )
 
 var (
-	MaxSize    = 10
-	MaxBackups = 5
+	MaxBackups = 3
 	channel    *Channel
 )
 
@@ -37,7 +36,7 @@ func NewChannel(c *Channel) *zap.Logger {
 	core := zapcore.NewCore(encoder, writeSyncer, logLevel)
 
 	// New logger
-	logger := zap.New(core, zap.AddCaller())
+	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
 
 	return logger
 }
@@ -65,10 +64,10 @@ func customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 func getLogWriter() zapcore.WriteSyncer {
 	lumberJackLogger := &lumberjack.Logger{
 		Filename:   channel.Path,
-		MaxSize:    MaxSize,
+		MaxSize:    channel.MaxSize,
 		MaxBackups: MaxBackups,
 		MaxAge:     channel.Days,
-		Compress:   false,
+		Compress:   channel.Compress,
 	}
 
 	// Print to console.
